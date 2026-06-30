@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lapszél — jegyzetek a margóra</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper: #FAF6EE;
+    --paper-2: #F2ECDD;
+    --ink: #211F1C;
+    --ink-soft: #565049;
+    --rust: #B6502E;
+    --sage: #5B6E4F;
+    --slate: #4A5C72;
+    --line: #DED4BC;
+    --line-strong: #C9BC9C;
+    --max: 1180px;
+  }
+
+  *{ box-sizing: border-box; }
+
+  html{ scroll-behavior: smooth; }
+
+  body{
+    margin:0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Source Serif 4', serif;
+    font-size: 17px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a{ color: inherit; }
+
+  .wrap{
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  /* ---------- Masthead ---------- */
+  .masthead{
+    border-bottom: 1px solid var(--line-strong);
+    background: var(--paper);
+  }
+
+  .masthead-inner{
+    display:flex;
+    align-items: baseline;
+    justify-content: space-between;
+    padding: 28px 0 18px;
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+
+  .logo{
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 34px;
+    letter-spacing: -0.01em;
+    display:flex;
+    align-items: baseline;
+    gap: 10px;
+    text-decoration: none;
+    color: var(--ink);
+  }
+
+  .logo .mark{
+    color: var(--rust);
+    font-style: italic;
+    font-weight: 500;
+  }
+
+  .tagline{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--ink-soft);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  nav.primary{
+    display:flex;
+    gap: 26px;
+    padding: 14px 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    flex-wrap: wrap;
+  }
+
+  nav.primary a{
+    text-decoration:none;
+    color: var(--ink-soft);
+    padding-bottom: 4px;
+    border-bottom: 2px solid transparent;
+    transition: color .15s ease, border-color .15s ease;
+  }
+
+  nav.primary a:hover, nav.primary a.active{
+    color: var(--ink);
+    border-color: var(--rust);
+  }
+
+  /* ---------- Hero / Featured ---------- */
+  .hero{
+    padding: 48px 0 56px;
+    display:grid;
+    grid-template-columns: 1.7fr 1fr;
+    gap: 56px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .featured .eyebrow{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--rust);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 14px;
+    display:block;
+  }
+
+  .featured h1{
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 46px;
+    line-height: 1.08;
+    margin: 0 0 18px;
+    letter-spacing: -0.01em;
+  }
+
+  .featured h1 a{ text-decoration:none; }
+  .featured h1 a:hover{ color: var(--rust); }
+
+  .featured p.dek{
+    font-size: 18px;
+    color: var(--ink-soft);
+    max-width: 56ch;
+    margin: 0 0 20px;
+  }
+
+  .meta{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    display:flex;
+    gap: 14px;
+    align-items:center;
+  }
+
+  .meta .dot{ width:4px; height:4px; border-radius:50%; background: var(--line-strong); }
+
+  /* sidebar "recent" rail */
+  .rail{
+    border-left: 1px solid var(--line);
+    padding-left: 32px;
+  }
+
+  .rail h2{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ink-soft);
+    margin: 0 0 18px;
+  }
+
+  .rail-item{
+    padding: 16px 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .rail-item:first-child{ padding-top:0; }
+  .rail-item:last-child{ border-bottom:none; }
+
+  .rail-item a{
+    text-decoration:none;
+    font-family: 'Fraunces', serif;
+    font-size: 17px;
+    font-weight: 500;
+    line-height: 1.3;
+    display:block;
+    margin-bottom: 6px;
+  }
+
+  .rail-item a:hover{ color: var(--rust); }
+
+  .rail-item .meta{ font-size: 11.5px; gap: 8px; }
+
+  /* ---------- Category filter ---------- */
+  .filterbar{
+    display:flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    padding: 28px 0;
+    align-items:center;
+  }
+
+  .filterbar span.label{
+    font-family:'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--ink-soft);
+    text-transform: uppercase;
+    margin-right: 4px;
+  }
+
+  .chip{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px;
+    border: 1px solid var(--line-strong);
+    background: transparent;
+    color: var(--ink-soft);
+    padding: 6px 13px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all .15s ease;
+  }
+
+  .chip:hover{ border-color: var(--ink); color: var(--ink); }
+
+  .chip.active{
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--paper);
+  }
+
+  /* ---------- Post grid: "spine" cards ---------- */
+  .grid{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+    padding-bottom: 64px;
+  }
+
+  .card{
+    position: relative;
+    background: var(--paper-2);
+    border: 1px solid var(--line);
+    padding: 22px 22px 22px 26px;
+    transition: transform .18s ease, box-shadow .18s ease;
+  }
+
+  .card::before{
+    content:"";
+    position:absolute;
+    left:0; top:0; bottom:0;
+    width: 5px;
+    background: var(--spine, var(--rust));
+  }
+
+  .card:hover{
+    transform: translateY(-3px);
+    box-shadow: 0 10px 24px -16px rgba(33,31,28,0.35);
+  }
+
+  .card .cat{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--spine, var(--rust));
+    margin-bottom: 10px;
+    display:block;
+  }
+
+  .card h3{
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 21px;
+    line-height: 1.25;
+    margin: 0 0 10px;
+  }
+
+  .card h3 a{ text-decoration:none; }
+  .card h3 a:hover{ color: var(--ink); text-decoration: underline; text-decoration-color: var(--spine); text-underline-offset: 4px; }
+
+  .card p{
+    font-size: 14.5px;
+    color: var(--ink-soft);
+    margin: 0 0 14px;
+    line-height: 1.55;
+  }
+
+  .card .meta{ font-size: 11.5px; }
+
+  .card.hidden{ display:none; }
+
+  /* ---------- Footer ---------- */
+  footer{
+    border-top: 1px solid var(--line-strong);
+    padding: 32px 0 48px;
+    margin-top: 12px;
+  }
+
+  .footer-inner{
+    display:flex;
+    justify-content: space-between;
+    align-items:center;
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+
+  footer .logo{ font-size: 20px; }
+
+  footer p{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--ink-soft);
+    margin:0;
+  }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 900px){
+    .hero{ grid-template-columns: 1fr; gap: 32px; }
+    .rail{ border-left:none; border-top: 1px solid var(--line); padding-left:0; padding-top: 28px; }
+    .grid{ grid-template-columns: repeat(2, 1fr); }
+    .featured h1{ font-size: 36px; }
+  }
+
+  @media (max-width: 600px){
+    .wrap{ padding: 0 18px; }
+    .grid{ grid-template-columns: 1fr; }
+    .featured h1{ font-size: 30px; }
+    .masthead-inner{ padding: 22px 0 12px; }
+  }
+
+  :focus-visible{
+    outline: 2px solid var(--rust);
+    outline-offset: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ transition: none !important; scroll-behavior: auto !important; }
+  }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap masthead-inner">
+    <a href="#" class="logo">Lap<span class="mark">szél</span></a>
+    <span class="tagline">Jegyzetek a margóra — minden héten</span>
+  </div>
+  <nav class="primary wrap">
+    <a href="#" class="active">Címlap</a>
+    <a href="#">Kultúra</a>
+    <a href="#">Technológia</a>
+    <a href="#">Társadalom</a>
+    <a href="#">Esszé</a>
+    <a href="#">Rólunk</a>
+  </nav>
+</header>
+
+<main class="wrap">
+
+  <section class="hero">
+    <article class="featured">
+      <span class="eyebrow">Vezércikk</span>
+      <h1><a href="#">Miért írunk még mindig a margóra, amikor mindenki a felhőbe ment</a></h1>
+      <p class="dek">A digitális jegyzetelés kényelmes, de van valami, amit a kézzel írt megjegyzés ad vissza, amit egyetlen szinkronizált app sem tud pótolni — egy hosszabb gondolatmenet arról, hogy mit veszítünk, ha mindent automatizálunk.</p>
+      <div class="meta">
+        <span>Nagy Eszter</span>
+        <span class="dot"></span>
+        <span>2026. jún. 28.</span>
+        <span class="dot"></span>
+        <span>8 perc olvasás</span>
+      </div>
+    </article>
+
+    <aside class="rail">
+      <h2>Legutóbbi</h2>
+      <div class="rail-item">
+        <a href="#">A városi kertek csendes visszahódítása</a>
+        <div class="meta"><span>Kovács Bence</span><span class="dot"></span><span>jún. 26.</span></div>
+      </div>
+      <div class="rail-item">
+        <a href="#">Mit tanulhatunk a hibázó algoritmusoktól</a>
+        <div class="meta"><span>Tóth Réka</span><span class="dot"></span><span>jún. 24.</span></div>
+      </div>
+      <div class="rail-item">
+        <a href="#">Egy hét net nélkül — napló</a>
+        <div class="meta"><span>Varga Pál</span><span class="dot"></span><span>jún. 21.</span></div>
+      </div>
+    </aside>
+  </section>
+
+  <div class="filterbar" id="filterbar">
+    <span class="label">Szűrés:</span>
+    <button class="chip active" data-filter="all">Mind</button>
+    <button class="chip" data-filter="kultura">Kultúra</button>
+    <button class="chip" data-filter="tech">Technológia</button>
+    <button class="chip" data-filter="tarsadalom">Társadalom</button>
+    <button class="chip" data-filter="essze">Esszé</button>
+  </div>
+
+  <section class="grid" id="grid">
+
+    <article class="card" data-cat="tech" style="--spine:#5B6E4F">
+      <span class="cat">Technológia</span>
+      <h3><a href="#">A lassú szoftver reneszánsza</a></h3>
+      <p>Egyre több fejlesztő tér vissza a könnyű, gyors, kevés függőségű programokhoz — beszélgetés azokkal, akik szándékosan lassítják a fejlesztést.</p>
+      <div class="meta"><span>Szabó Dávid</span><span class="dot"></span><span>jún. 27.</span></div>
+    </article>
+
+    <article class="card" data-cat="kultura" style="--spine:#B6502E">
+      <span class="cat">Kultúra</span>
+      <h3><a href="#">A vidéki mozik halk újjászületése</a></h3>
+      <p>Kis települések önkéntesei tartanak életben több évtizedes mozitermeket — riport három magyar kisvárosból.</p>
+      <div class="meta"><span>Fekete Anna</span><span class="dot"></span><span>jún. 25.</span></div>
+    </article>
+
+    <article class="card" data-cat="essze" style="--spine:#4A5C72">
+      <span class="cat">Esszé</span>
+      <h3><a href="#">Az unalom, mint elveszett luxuscikk</a></h3>
+      <p>Mikor volt utoljára, hogy semmit sem csináltál? Egy elgondolkodtató esszé a figyelmünkért folyó versenyről.</p>
+      <div class="meta"><span>Nagy Eszter</span><span class="dot"></span><span>jún. 23.</span></div>
+    </article>
+
+    <article class="card" data-cat="tarsadalom" style="--spine:#5B6E4F">
+      <span class="cat">Társadalom</span>
+      <h3><a href="#">A négynapos munkahét magyar kísérletei</a></h3>
+      <p>Három cég vezetőjével beszélgettünk arról, mit tanultak az első fél év alatt — és mit nem mondanak el a statisztikák.</p>
+      <div class="meta"><span>Kovács Bence</span><span class="dot"></span><span>jún. 22.</span></div>
+    </article>
+
+    <article class="card" data-cat="tech" style="--spine:#5B6E4F">
+      <span class="cat">Technológia</span>
+      <h3><a href="#">Mire jó még egy régi telefon</a></h3>
+      <p>Praktikus ötletek arról, hogyan kaphat új életet egy fiókban porosodó okostelefon — kamerától az időjárás-állomásig.</p>
+      <div class="meta"><span>Tóth Réka</span><span class="dot"></span><span>jún. 20.</span></div>
+    </article>
+
+    <article class="card" data-cat="kultura" style="--spine:#B6502E">
+      <span class="cat">Kultúra</span>
+      <h3><a href="#">Kortárs magyar illusztrátorok, akiket érdemes követni</a></h3>
+      <p>Hat alkotó, akik a közösségi médiától függetlenül is egyedi vizuális nyelvet építettek maguknak.</p>
+      <div class="meta"><span>Varga Pál</span><span class="dot"></span><span>jún. 18.</span></div>
+    </article>
+
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap footer-inner">
+    <a href="#" class="logo">Lap<span class="mark">szél</span></a>
+    <p>© 2026 Lapszél — készült HTML-lel és CSS-szel, szerver nélkül.</p>
+  </div>
+</footer>
+
+<script>
+  const chips = document.querySelectorAll('.chip');
+  const cards = document.querySelectorAll('.card');
+
+  chips.forEach(chip => {
+    chip.addEventListener('click', () => {
+      chips.forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      const filter = chip.dataset.filter;
+      cards.forEach(card => {
+        const show = filter === 'all' || card.dataset.cat === filter;
+        card.classList.toggle('hidden', !show);
+      });
+    });
+  });
+</script>
+
+</body>
+</html>
