@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+html<!DOCTYPE html>
 <html lang="hu">
 <head>
 <meta charset="UTF-8">
@@ -43,7 +43,6 @@
     padding: 0 32px;
   }
 
-  /* ---------- Masthead ---------- */
   .masthead{
     border-bottom: 1px solid var(--line-strong);
     background: var(--paper);
@@ -108,7 +107,6 @@
     border-color: var(--rust);
   }
 
-  /* ---------- Hero / Featured ---------- */
   .hero{
     padding: 48px 0 56px;
     display:grid;
@@ -157,7 +155,6 @@
 
   .meta .dot{ width:4px; height:4px; border-radius:50%; background: var(--line-strong); }
 
-  /* sidebar "recent" rail */
   .rail{
     border-left: 1px solid var(--line);
     padding-left: 32px;
@@ -194,7 +191,101 @@
 
   .rail-item .meta{ font-size: 11.5px; gap: 8px; }
 
-  /* ---------- Category filter ---------- */
+  .signup{
+    background: var(--ink);
+    color: var(--paper);
+    padding: 40px 36px;
+    margin: 8px 0 0;
+    display:grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 32px;
+    align-items:center;
+  }
+
+  .signup .eyebrow{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #C9A98B;
+    display:block;
+    margin-bottom: 10px;
+  }
+
+  .signup h2{
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 26px;
+    line-height: 1.25;
+    margin: 0 0 8px;
+  }
+
+  .signup p{
+    font-size: 14.5px;
+    color: #C9C2B4;
+    margin: 0;
+    max-width: 46ch;
+  }
+
+  .signup-form{
+    display:flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .signup-form input[type="email"]{
+    flex: 1;
+    min-width: 200px;
+    background: transparent;
+    border: 1px solid #595449;
+    color: var(--paper);
+    padding: 13px 16px;
+    font-family: 'Source Serif 4', serif;
+    font-size: 14.5px;
+    border-radius: 2px;
+  }
+
+  .signup-form input[type="email"]::placeholder{ color: #8B8576; }
+
+  .signup-form input[type="email"]:focus{
+    outline: none;
+    border-color: var(--rust);
+  }
+
+  .signup-form button{
+    background: var(--rust);
+    color: var(--paper);
+    border: none;
+    padding: 13px 24px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: background .15s ease;
+  }
+
+  .signup-form button:hover{ background: #9C4524; }
+
+  .signup-note{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: #8B8576;
+    margin-top: 10px;
+  }
+
+  .signup-success{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: #C9A98B;
+    display:none;
+  }
+
+  @media (max-width: 760px){
+    .signup{ grid-template-columns: 1fr; padding: 32px 24px; }
+  }
+
   .filterbar{
     display:flex;
     gap: 10px;
@@ -231,7 +322,6 @@
     color: var(--paper);
   }
 
-  /* ---------- Post grid: "spine" cards ---------- */
   .grid{
     display:grid;
     grid-template-columns: repeat(3, 1fr);
@@ -292,7 +382,6 @@
 
   .card.hidden{ display:none; }
 
-  /* ---------- Footer ---------- */
   footer{
     border-top: 1px solid var(--line-strong);
     padding: 32px 0 48px;
@@ -316,7 +405,6 @@
     margin:0;
   }
 
-  /* ---------- Responsive ---------- */
   @media (max-width: 900px){
     .hero{ grid-template-columns: 1fr; gap: 32px; }
     .rail{ border-left:none; border-top: 1px solid var(--line); padding-left:0; padding-top: 28px; }
@@ -391,6 +479,22 @@
     </aside>
   </section>
 
+  <section class="signup">
+    <div>
+      <span class="eyebrow">Iratkozz fel</span>
+      <h2>Egy levél, néhány hetente — semmi felesleges</h2>
+      <p>Ha tetszik, amit itt olvasol, ne hagyd a véletlenre, hogy újra megtaláld. Nincs spam, csak akkor írok, ha tényleg van mit mondanom.</p>
+    </div>
+    <div>
+      <form class="signup-form" id="signupForm">
+        <input type="email" id="signupEmail" placeholder="te@email.hu" required>
+        <button type="submit">Feliratkozom</button>
+      </form>
+      <p class="signup-note">Bármikor leiratkozhatsz, egy kattintással.</p>
+      <p class="signup-success" id="signupSuccess">Köszönöm! Hamarosan jelentkezem.</p>
+    </div>
+  </section>
+
   <div class="filterbar" id="filterbar">
     <span class="label">Szűrés:</span>
     <button class="chip active" data-filter="all">Mind</button>
@@ -456,6 +560,15 @@
 </footer>
 
 <script>
+  const signupForm = document.getElementById('signupForm');
+  const signupSuccess = document.getElementById('signupSuccess');
+
+  signupForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    signupForm.style.display = 'none';
+    signupSuccess.style.display = 'block';
+  });
+
   const chips = document.querySelectorAll('.chip');
   const cards = document.querySelectorAll('.card');
 
